@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qutell_training/core/utils/app_images.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CustomContacts extends StatelessWidget {
   const CustomContacts({super.key, this.onGoogleTap, this.onAppleTap});
@@ -9,21 +9,22 @@ class CustomContacts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         GestureDetector(
             onTap: onGoogleTap,
-            child: CircleAvatar(
+            child: const CircleAvatar(
               radius: 24,
               backgroundColor: Colors.white,
-              child: Image.asset(AppImages.google),
+              child: Icon(FontAwesomeIcons.google),
             )),
         GestureDetector(
             onTap: onAppleTap,
-            child: CircleAvatar(
+            child: const CircleAvatar(
               radius: 24,
               backgroundColor: Colors.white,
-              child: Image.asset(AppImages.apple),
-            ))
+              child: Icon(FontAwesomeIcons.apple),
+            )),
       ],
     );
   }

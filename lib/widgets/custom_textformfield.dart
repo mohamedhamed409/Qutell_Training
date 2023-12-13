@@ -1,50 +1,43 @@
 import 'package:flutter/material.dart';
 
-class CustomTextFormField extends StatefulWidget {
+import '../features/login/presentation/view_model/login_cubit.dart';
+
+class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
     super.key,
     this.controller,
     required this.icon,
     this.isPassword = false,
     required this.hint,
+    this.validator,
   });
   final TextEditingController? controller;
   final IconData icon;
   final bool isPassword;
   final String hint;
-
-  @override
-  State<CustomTextFormField> createState() => _CustomTextFormFieldState();
-}
-
-class _CustomTextFormFieldState extends State<CustomTextFormField> {
-  bool isVisiable = false, obscureText = true;
-
-  void changePasswordVisibility() {
-    isVisiable = !isVisiable;
-    obscureText = !obscureText;
-    setState(() {});
-  }
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
+    var cubit = LoginCubit.get(context);
     return TextFormField(
-      controller: widget.controller,
-      obscureText:widget. isPassword?obscureText:false,
+      controller: controller,
+      obscureText: isPassword ? cubit.obscureText : false,
       decoration: InputDecoration(
         border: InputBorder.none,
-        hintText: widget.hint,
-        focusedBorder: InputBorder.none,
+        hintText: hint,
+        focusedBorder: const OutlineInputBorder(),
         fillColor: Colors.white,
         filled: true,
-        prefixIcon: Icon(widget.icon),
-        suffixIcon: widget.isPassword
+        prefixIcon: Icon(icon),
+        suffixIcon: isPassword
             ? GestureDetector(
-                onTap: () => changePasswordVisibility(),
-                child:
-                    Icon(isVisiable ? Icons.visibility : Icons.visibility_off))
+                onTap: () => cubit.changePasswordVisibility(),
+                child: Icon(
+                    cubit.isVisiable ? Icons.visibility : Icons.visibility_off))
             : null,
       ),
+      validator: validator,
     );
   }
 }
